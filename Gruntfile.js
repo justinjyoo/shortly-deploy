@@ -3,6 +3,17 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
+      options: {
+        separator: ';'
+      },
+      js: {
+        src: ['server.js', 'server-config.js', './app/*.js', './app/**/*.js', './lib/*.js', './public/client/*.js'],
+        dest: 'dist/<%= pkg.name %>.min.js'
+      },
+      css: {
+        src: ['./public/*.css'],
+        dest: 'dist/<%= pkg.name %>.min.css'
+      }
     },
 
     mochaTest: {
@@ -21,11 +32,26 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      // option: {
+      //   // the banner is inserted at the top of the output
+      //   banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+      // },
+      js: {
+        files: {
+          'dist/<%= pkg.name %>.min.js': ['<%= concat.js.dest %>']
+        }
+      }
+      // css: {
+      //   files: {
+      //     'dist/<%= pkg.name %>.min.css': ['<% concat.css.dest %>']
+      //   }
+      // }
     },
 
     eslint: {
       target: [
         // Add list of files to lint here
+        'dist/<%= pkg.name %>.min.js'
       ]
     },
 
@@ -73,10 +99,11 @@ module.exports = function(grunt) {
   ////////////////////////////////////////////////////
 
   grunt.registerTask('test', [
-    'mochaTest'
+    'eslint', 'mochaTest'
   ]);
 
   grunt.registerTask('build', [
+    'concat:js', 'concat:css', 'uglify:js'
   ]);
 
   grunt.registerTask('upload', function(n) {
