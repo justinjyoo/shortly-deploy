@@ -32,20 +32,11 @@ module.exports = function(grunt) {
     },
 
     uglify: {
-      // option: {
-      //   // the banner is inserted at the top of the output
-      //   banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
-      // },
       js: {
         files: {
           'dist/<%= pkg.name %>.min.js': ['<%= concat.js.dest %>']
         }
       }
-      // css: {
-      //   files: {
-      //     'dist/<%= pkg.name %>.min.css': ['<% concat.css.dest %>']
-      //   }
-      // }
     },
 
     eslint: {
@@ -116,6 +107,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('deploy', [
     // add your deploy tasks here
+    // add option- if prod, build test and deploy to remote server (call upload prod here?)
   ]);
 
 
