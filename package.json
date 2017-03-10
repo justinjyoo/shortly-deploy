@@ -10,7 +10,8 @@
   },
   "scripts": {
     "start": "grunt build && grunt upload",
-    "test": "grunt build && grunt test",
+    "test:build": "grunt build && grunt test",
+    "test": "grunt test",
     "lint": "eslint ./"
   },
   "dependencies": {
